@@ -9,17 +9,15 @@ import Foundation
 import Alamofire
 
 
-
 open class DebuggingAPI: APIBase {
     /**
      Disable debugging via Redis
-     
      - parameter customerId: (path) ID of the customer 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func disableDebugger(customerId: String, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func disableDebugger(customerId: String, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         disableDebuggerWithRequestBuilder(customerId: customerId).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -28,9 +26,8 @@ open class DebuggingAPI: APIBase {
      Disable debugging via Redis
      - DELETE /v2/_debug/{customerId}
      - Forces debugging to be disabled for the customer
-     
-     - parameter customerId: (path) ID of the customer 
 
+     - parameter customerId: (path) ID of the customer 
      - returns: RequestBuilder<Void> 
      */
     open class func disableDebuggerWithRequestBuilder(customerId: String) -> RequestBuilder<Void> {
@@ -41,7 +38,6 @@ open class DebuggingAPI: APIBase {
 
         let url = NSURLComponents(string: URLString)
 
-
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
@@ -49,13 +45,12 @@ open class DebuggingAPI: APIBase {
 
     /**
      Enable debugging via Redis
-     
      - parameter customerId: (path) ID of the customer 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func enableDebugger(customerId: String, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func enableDebugger(customerId: String, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         enableDebuggerWithRequestBuilder(customerId: customerId).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -64,9 +59,8 @@ open class DebuggingAPI: APIBase {
      Enable debugging via Redis
      - POST /v2/_debug/{customerId}
      - Debugging is only enabled for a limited period of time (default is one hour)
-     
-     - parameter customerId: (path) ID of the customer 
 
+     - parameter customerId: (path) ID of the customer 
      - returns: RequestBuilder<Void> 
      */
     open class func enableDebuggerWithRequestBuilder(customerId: String) -> RequestBuilder<Void> {
@@ -76,7 +70,6 @@ open class DebuggingAPI: APIBase {
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
-
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 

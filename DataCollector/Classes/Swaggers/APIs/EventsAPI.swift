@@ -9,18 +9,16 @@ import Foundation
 import Alamofire
 
 
-
 open class EventsAPI: APIBase {
     /**
      Creates a single event (a transaction with no duration)
-     
      - parameter customerId: (query) customerId 
      - parameter request: (body) Similar to transactions, the details of that event (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createEvent(customerId: String, request: NewEventRequest? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func createEvent(customerId: String, request: NewEventRequest? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         createEventWithRequestBuilder(customerId: customerId, request: request).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -28,10 +26,9 @@ open class EventsAPI: APIBase {
     /**
      Creates a single event (a transaction with no duration)
      - POST /v2/events
-     
+
      - parameter customerId: (query) customerId 
      - parameter request: (body) Similar to transactions, the details of that event (optional)
-
      - returns: RequestBuilder<Void> 
      */
     open class func createEventWithRequestBuilder(customerId: String, request: NewEventRequest? = nil) -> RequestBuilder<Void> {
@@ -43,7 +40,6 @@ open class EventsAPI: APIBase {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 

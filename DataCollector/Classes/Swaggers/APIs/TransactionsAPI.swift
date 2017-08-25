@@ -9,18 +9,16 @@ import Foundation
 import Alamofire
 
 
-
 open class TransactionsAPI: APIBase {
     /**
      Begins a new transaction
-     
      - parameter customerId: (query) customerId 
      - parameter request: (body) Transaction initiation information (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func beginTransaction(customerId: String, request: DataCollectorBeginTransactionRequest? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func beginTransaction(customerId: String, request: DataCollectorBeginTransactionRequest? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         beginTransactionWithRequestBuilder(customerId: customerId, request: request).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -29,10 +27,9 @@ open class TransactionsAPI: APIBase {
      Begins a new transaction
      - POST /v2/transactions
      - Use the event properties to describe the initial state of the transaction
-     
+
      - parameter customerId: (query) customerId 
      - parameter request: (body) Transaction initiation information (optional)
-
      - returns: RequestBuilder<Void> 
      */
     open class func beginTransactionWithRequestBuilder(customerId: String, request: DataCollectorBeginTransactionRequest? = nil) -> RequestBuilder<Void> {
@@ -44,7 +41,6 @@ open class TransactionsAPI: APIBase {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 
@@ -53,15 +49,14 @@ open class TransactionsAPI: APIBase {
 
     /**
      Ends the transaction
-     
      - parameter id: (path) Unique ID of the transaction being finalized 
      - parameter customerId: (query) customerId 
      - parameter request: (body) Transaction finalization information (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func endTransaction(id: String, customerId: String, request: DataCollectorEndTransactionRequest? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func endTransaction(id: String, customerId: String, request: DataCollectorEndTransactionRequest? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         endTransactionWithRequestBuilder(id: id, customerId: customerId, request: request).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -70,11 +65,10 @@ open class TransactionsAPI: APIBase {
      Ends the transaction
      - PUT /v2/transactions/{id}/end
      - Submits final transaction state to Knetik.io
-     
+
      - parameter id: (path) Unique ID of the transaction being finalized 
      - parameter customerId: (query) customerId 
      - parameter request: (body) Transaction finalization information (optional)
-
      - returns: RequestBuilder<Void> 
      */
     open class func endTransactionWithRequestBuilder(id: String, customerId: String, request: DataCollectorEndTransactionRequest? = nil) -> RequestBuilder<Void> {
@@ -87,7 +81,6 @@ open class TransactionsAPI: APIBase {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 
@@ -96,14 +89,13 @@ open class TransactionsAPI: APIBase {
 
     /**
      Creates and finalizes a collection of transaction information
-     
      - parameter customerId: (query) customerId 
      - parameter request: (body) Collection state information (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateCollection(customerId: String, request: DataCollectorUpdateCollectionRequest? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func updateCollection(customerId: String, request: DataCollectorUpdateCollectionRequest? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         updateCollectionWithRequestBuilder(customerId: customerId, request: request).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -112,10 +104,9 @@ open class TransactionsAPI: APIBase {
      Creates and finalizes a collection of transaction information
      - POST /v2/collections
      - This operation basically encapsulates beginTransaction and endTransaction semantics into a single step and is used to update user balance information in Knetik.io
-     
+
      - parameter customerId: (query) customerId 
      - parameter request: (body) Collection state information (optional)
-
      - returns: RequestBuilder<Void> 
      */
     open class func updateCollectionWithRequestBuilder(customerId: String, request: DataCollectorUpdateCollectionRequest? = nil) -> RequestBuilder<Void> {
@@ -127,7 +118,6 @@ open class TransactionsAPI: APIBase {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 
@@ -136,15 +126,14 @@ open class TransactionsAPI: APIBase {
 
     /**
      Updates the progress for the given transaction
-     
      - parameter id: (path) Unique ID of the transaction being updated 
      - parameter customerId: (query) customerId 
      - parameter request: (body) Transaction progress information (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateTransaction(id: String, customerId: String, request: DataCollectorUpdateTransactionRequest? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func updateTransaction(id: String, customerId: String, request: DataCollectorUpdateTransactionRequest? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         updateTransactionWithRequestBuilder(id: id, customerId: customerId, request: request).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -153,11 +142,10 @@ open class TransactionsAPI: APIBase {
      Updates the progress for the given transaction
      - PUT /v2/transactions/{id}
      - Use the event properties to update the state of the transaction
-     
+
      - parameter id: (path) Unique ID of the transaction being updated 
      - parameter customerId: (query) customerId 
      - parameter request: (body) Transaction progress information (optional)
-
      - returns: RequestBuilder<Void> 
      */
     open class func updateTransactionWithRequestBuilder(id: String, customerId: String, request: DataCollectorUpdateTransactionRequest? = nil) -> RequestBuilder<Void> {
@@ -170,7 +158,6 @@ open class TransactionsAPI: APIBase {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 

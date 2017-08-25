@@ -9,19 +9,17 @@ import Foundation
 import Alamofire
 
 
-
 open class UsersAPI: APIBase {
     /**
      Submit a new user event
-     
      - parameter customerId: (query) customerId 
      - parameter request: (body) New user information (optional)
      - parameter checked: (query) Flag indicating whether the user state should be checked before updating the state in the Knetik.io platform (optional, default to false)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func newUser(customerId: String, request: DataCollectorNewUserRequest? = nil, checked: Bool? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func newUser(customerId: String, request: DataCollectorNewUserRequest? = nil, checked: Bool? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         newUserWithRequestBuilder(customerId: customerId, request: request, checked: checked).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -30,11 +28,10 @@ open class UsersAPI: APIBase {
      Submit a new user event
      - POST /v2/users
      - Declares to the Knetik.io platform that the user is new at the given point in time. If the 'checked' parameter is provided and set to 'true', however, the current state of the user in the Knetik.io platform is examined to determine if the user was previously declared as new and, if so, the user information is not updated in the Knetik.io platform.
-     
+
      - parameter customerId: (query) customerId 
      - parameter request: (body) New user information (optional)
      - parameter checked: (query) Flag indicating whether the user state should be checked before updating the state in the Knetik.io platform (optional, default to false)
-
      - returns: RequestBuilder<Void> 
      */
     open class func newUserWithRequestBuilder(customerId: String, request: DataCollectorNewUserRequest? = nil, checked: Bool? = nil) -> RequestBuilder<Void> {
@@ -47,7 +44,6 @@ open class UsersAPI: APIBase {
             "checked": checked, 
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 
@@ -56,15 +52,14 @@ open class UsersAPI: APIBase {
 
     /**
      Updates the entity state for the given user
-     
      - parameter id: (path) ID of the user for whom state is being updated 
      - parameter customerId: (query) customerId 
      - parameter request: (body) Updated user state information (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateUserState(id: String, customerId: String, request: DataCollectorUpdateUserStateRequest? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func updateUserState(id: String, customerId: String, request: DataCollectorUpdateUserStateRequest? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         updateUserStateWithRequestBuilder(id: id, customerId: customerId, request: request).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -72,11 +67,10 @@ open class UsersAPI: APIBase {
     /**
      Updates the entity state for the given user
      - PUT /v2/users/{id}
-     
+
      - parameter id: (path) ID of the user for whom state is being updated 
      - parameter customerId: (query) customerId 
      - parameter request: (body) Updated user state information (optional)
-
      - returns: RequestBuilder<Void> 
      */
     open class func updateUserStateWithRequestBuilder(id: String, customerId: String, request: DataCollectorUpdateUserStateRequest? = nil) -> RequestBuilder<Void> {
@@ -89,7 +83,6 @@ open class UsersAPI: APIBase {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 

@@ -9,18 +9,16 @@ import Foundation
 import Alamofire
 
 
-
 open class BatchAPI: APIBase {
     /**
      Submit a batch of requests as an array of input models
-     
      - parameter customerId: (query) customerId 
      - parameter batchRequest: (body) The batch of requests to submit (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func submitBatch(customerId: String, batchRequest: DataCollectorBatchRequest? = nil, completion: @escaping ((_ data: [BatchRequestResult]?,_ error: Error?) -> Void)) {
+    open class func submitBatch(customerId: String, batchRequest: DataCollectorBatchRequest? = nil, completion: @escaping ((_ data: [BatchRequestResult]?, _ error: ErrorResponse?) -> Void)) {
         submitBatchWithRequestBuilder(customerId: customerId, batchRequest: batchRequest).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -29,11 +27,10 @@ open class BatchAPI: APIBase {
      Submit a batch of requests as an array of input models
      - POST /v2/batch
      - For this to work, you will need to specify the value of the request_type field of each element in the list, which indicates the type of the element. For example, to submit a batch containing a DataCollectorNewUserRequest you would specify the value `newUser` as the request_type for your DataCollectorNewUserRequest element. Convention is DataCollectorSomeTypeRequest -> someType (DataCollectorNewUserRequest -> newUser, DataCollectorNewDeviceRequest -> newDevice, etc). If any invalid requests are detected in the batch, a HTTP 207 (Multi-Status) will be returned and the body will contain the status of each of the requests, in the order in which they were submitted, with detailed error messages and the JSON of the request returned for any invalid requests.
+
      - examples: [{output=none}]
-     
      - parameter customerId: (query) customerId 
      - parameter batchRequest: (body) The batch of requests to submit (optional)
-
      - returns: RequestBuilder<[BatchRequestResult]> 
      */
     open class func submitBatchWithRequestBuilder(customerId: String, batchRequest: DataCollectorBatchRequest? = nil) -> RequestBuilder<[BatchRequestResult]> {
@@ -45,7 +42,6 @@ open class BatchAPI: APIBase {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<[BatchRequestResult]>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 

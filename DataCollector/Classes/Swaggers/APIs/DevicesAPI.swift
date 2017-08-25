@@ -9,19 +9,17 @@ import Foundation
 import Alamofire
 
 
-
 open class DevicesAPI: APIBase {
     /**
      Submit a new device event
-     
      - parameter customerId: (query) customerId 
      - parameter request: (body) New device information (optional)
      - parameter checked: (query) Flag indicating whether the device state should be checked before updating the state in the Knetik.io platform (optional, default to false)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func newDevice(customerId: String, request: DataCollectorNewDeviceRequest? = nil, checked: Bool? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func newDevice(customerId: String, request: DataCollectorNewDeviceRequest? = nil, checked: Bool? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         newDeviceWithRequestBuilder(customerId: customerId, request: request, checked: checked).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -30,11 +28,10 @@ open class DevicesAPI: APIBase {
      Submit a new device event
      - POST /v2/devices
      - Declares to the Knetik.io platform that a device is new at the given point in time. If the 'checked' parameter is provided and set to 'true', however, the current state of the device in the Knetik.io platform is examined to determine if the device was previously declared as new and, if so, the device information is not updated in the Knetik.io platform.
-     
+
      - parameter customerId: (query) customerId 
      - parameter request: (body) New device information (optional)
      - parameter checked: (query) Flag indicating whether the device state should be checked before updating the state in the Knetik.io platform (optional, default to false)
-
      - returns: RequestBuilder<Void> 
      */
     open class func newDeviceWithRequestBuilder(customerId: String, request: DataCollectorNewDeviceRequest? = nil, checked: Bool? = nil) -> RequestBuilder<Void> {
@@ -47,7 +44,6 @@ open class DevicesAPI: APIBase {
             "checked": checked, 
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 
@@ -56,15 +52,14 @@ open class DevicesAPI: APIBase {
 
     /**
      Updates the state parameters for the given device
-     
      - parameter id: (path) ID of the device for which state information is being updated 
      - parameter customerId: (query) customerId 
      - parameter request: (body) Updated device state information (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateDeviceState(id: String, customerId: String, request: DataCollectorUpdateDeviceStateRequest? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func updateDeviceState(id: String, customerId: String, request: DataCollectorUpdateDeviceStateRequest? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         updateDeviceStateWithRequestBuilder(id: id, customerId: customerId, request: request).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -72,11 +67,10 @@ open class DevicesAPI: APIBase {
     /**
      Updates the state parameters for the given device
      - PUT /v2/devices/{id}
-     
+
      - parameter id: (path) ID of the device for which state information is being updated 
      - parameter customerId: (query) customerId 
      - parameter request: (body) Updated device state information (optional)
-
      - returns: RequestBuilder<Void> 
      */
     open class func updateDeviceStateWithRequestBuilder(id: String, customerId: String, request: DataCollectorUpdateDeviceStateRequest? = nil) -> RequestBuilder<Void> {
@@ -89,7 +83,6 @@ open class DevicesAPI: APIBase {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 

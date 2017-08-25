@@ -9,18 +9,16 @@ import Foundation
 import Alamofire
 
 
-
 open class MobileApplicationTrackingAPI: APIBase {
     /**
      Submit mobile application tracking data for Tune applications
-     
      - parameter customerId: (query) customerId 
      - parameter request: (body) Tune campaign tracking information (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func submitTuneRequest(customerId: String, request: DataCollectorTuneRequest? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func submitTuneRequest(customerId: String, request: DataCollectorTuneRequest? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         submitTuneRequestWithRequestBuilder(customerId: customerId, request: request).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -28,10 +26,9 @@ open class MobileApplicationTrackingAPI: APIBase {
     /**
      Submit mobile application tracking data for Tune applications
      - POST /v2/tune
-     
+
      - parameter customerId: (query) customerId 
      - parameter request: (body) Tune campaign tracking information (optional)
-
      - returns: RequestBuilder<Void> 
      */
     open class func submitTuneRequestWithRequestBuilder(customerId: String, request: DataCollectorTuneRequest? = nil) -> RequestBuilder<Void> {
@@ -43,7 +40,6 @@ open class MobileApplicationTrackingAPI: APIBase {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "customerId": customerId
         ])
-        
 
         let requestBuilder: RequestBuilder<Void>.Type = DataCollectorAPI.requestBuilderFactory.getBuilder()
 
